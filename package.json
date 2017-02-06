@@ -1,6 +1,6 @@
 {
   "name": "typedoc-plugin-external-module-map",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Specify the Typedoc Module of a file using a regular expression on the filename",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/asgerjensen/typedoc-plugin-external-module-map"
-  },	
+  },
   "publishConfig": {
-    "registry" : "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/"
   },
   "author": "Asger Jensen <asger.jensen@gmail.com>",
   "license": "MIT",
