@@ -67,7 +67,7 @@ It is probably easier to create a typedoc options file (typedoc.json) and add it
   "ignoreCompilerErrors": "false",
   "preserveConstEnums": "true",
   "exclude": "*.spec.ts",
-  "external-modulemap": ".*\/modules\/@perpendicular\/([\\w\\-_]+)\/",
+  "external-modulemap": ".*\/modules\/@mycompany\/([\\w\\-_]+)\/",
   "stripInternal": "false"
 }
 ```
