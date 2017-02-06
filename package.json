@@ -15,9 +15,6 @@
     "type": "git",
     "url": "https://github.com/asgerjensen/typedoc-plugin-external-module-map"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "author": "Asger Jensen <asger.jensen@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
