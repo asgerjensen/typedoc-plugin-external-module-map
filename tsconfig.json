@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "allowJs": true,
+    "module": "umd",
+    "target": "es5",
+    "outDir": "./",
+    "experimentalDecorators": true
+  },
+  "files": [
+    "plugin.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

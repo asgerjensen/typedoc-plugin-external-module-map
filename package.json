@@ -1,0 +1,28 @@
+{
+  "name": "typedoc-plugin-external-module-map",
+  "version": "0.0.5",
+  "description": "Specify the Typedoc Module of a file using a regular expression on the filename",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "typedocplugin",
+    "typedoc"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asgerjensen/typedoc-plugin-external-module-map"
+  },	
+  "author": "Asger Jensen <asger.jensen@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "typedoc": "^0.5.3"
+  },
+  "devDependencies": {
+    "@types/handlebars": "^4.0.31",
+    "typedoc": "^0.5.3",
+    "typescript": "^2.1.1"
+  }
+}
