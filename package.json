@@ -18,7 +18,7 @@
   "author": "Asger Jensen <asger.jensen@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "typedoc": "^0.5.3"
+    "typedoc": ">=0.5.3"
   },
   "devDependencies": {
     "@types/handlebars": "^4.0.31",
