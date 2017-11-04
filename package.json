@@ -18,11 +18,11 @@
   "author": "Asger Jensen <asger.jensen@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "typedoc": ">=0.5.3"
+    "typedoc": ">=0.8 <1.0"
   },
   "devDependencies": {
     "@types/handlebars": "^4.0.31",
-    "typedoc": "^0.5.3",
+    "typedoc": "^0.8.0",
     "typescript": "^2.1.1"
   }
 }
