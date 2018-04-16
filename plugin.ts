@@ -23,23 +23,10 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
   private externalmap: string;
   private mapRegEx: RegExp ;
   private isMappingEnabled: boolean ;
+  private options: Options;
 
   initialize() {
-    var options: Options = this.application.options;
-    options.read({}, OptionsReadMode.Prefetch);
-    this.externalmap = (options.getValue('external-modulemap'));
-    if (!!this.externalmap) {
-      try {
-        console.log("INFO: applying regexp ", this.externalmap, " to calculate module names");
-        this.mapRegEx = new RegExp(this.externalmap);
-        this.isMappingEnabled = true;
-        console.log("INFO: Enabled", this.isMappingEnabled);
-      } catch (e) {
-        console.log("WARN: external map not recognized. Not processing.", e);
-      }
-    }
-
-
+    this.options = this.application.options;
     this.listenTo(this.owner, {
       [Converter.EVENT_BEGIN]: this.onBegin,
       [Converter.EVENT_CREATE_DECLARATION]: this.onDeclarationBegin,
@@ -54,6 +41,18 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
    */
   private onBegin(context: Context) {
     this.moduleRenames = [];
+    this.options.read({}, OptionsReadMode.Prefetch);
+    this.externalmap = (this.options.getValue('external-modulemap'));
+    if (!!this.externalmap) {
+      try {
+        console.log("INFO: applying regexp ", this.externalmap, " to calculate module names");
+        this.mapRegEx = new RegExp(this.externalmap);
+        this.isMappingEnabled = true;
+        console.log("INFO: Enabled", this.isMappingEnabled);
+      } catch (e) {
+        console.log("WARN: external map not recognized. Not processing.", e);
+      }
+    }
   }
 
   private onDeclarationBegin(context: Context, reflection: Reflection, node?) {
