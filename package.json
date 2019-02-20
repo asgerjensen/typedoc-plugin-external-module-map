@@ -1,6 +1,6 @@
 {
   "name": "typedoc-plugin-external-module-map",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Specify the Typedoc Module of a file using a regular expression on the filename",
   "main": "index.js",
   "scripts": {
@@ -18,11 +18,10 @@
   "author": "Asger Jensen <asger.jensen@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "typedoc": ">=0.8 <1.0"
+    "typedoc": ">=0.14 <1.0"
   },
   "devDependencies": {
-    "@types/handlebars": "^4.0.31",
-    "typedoc": "^0.8.0",
-    "typescript": "^2.1.1"
+    "typedoc": "^0.14.2",
+    "typescript": "^3.3.3"
   }
 }
