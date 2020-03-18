@@ -1,11 +1,10 @@
-import { Reflection, ReflectionKind } from "typedoc/dist/lib/models/reflections/abstract";
+import { Reflection } from "typedoc/dist/lib/models/reflections/abstract";
 import { Component, ConverterComponent } from "typedoc/dist/lib/converter/components";
 import { Converter } from "typedoc/dist/lib/converter/converter";
 import { Context } from "typedoc/dist/lib/converter/context";
 import { CommentPlugin } from "typedoc/dist/lib/converter/plugins/CommentPlugin";
 import { ContainerReflection } from "typedoc/dist/lib/models/reflections/container";
-import { getRawComment } from "typedoc/dist/lib/converter/factories/comment";
-import { Options, OptionsReadMode } from "typedoc/dist/lib/utils/options";
+import { Options } from "typedoc/dist/lib/utils/options";
 
 
 /**
@@ -41,7 +40,7 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
    */
   private onBegin(context: Context) {
     this.moduleRenames = [];
-    this.options.read({}, OptionsReadMode.Prefetch);
+    this.options.read();
     this.externalmap = (this.options.getValue('external-modulemap'));
     if (!!this.externalmap) {
       try {
