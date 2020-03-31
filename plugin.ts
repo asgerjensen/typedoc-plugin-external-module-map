@@ -40,8 +40,8 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
    */
   private onBegin(context: Context) {
     this.moduleRenames = [];
-    this.options.read();
-    this.externalmap = (this.options.getValue('external-modulemap'));
+    //this.options.read();
+    this.externalmap = (this.options.getValue('external-modulemap') as string);
     if (!!this.externalmap) {
       try {
         console.log("INFO: applying regexp ", this.externalmap, " to calculate module names");
@@ -112,8 +112,8 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
       // Make sure the module being renamed doesn't have children, or they will be deleted
       if (renaming.children)
         renaming.children.length = 0;
-      CommentPlugin.removeReflection(context.project, renaming);
-
+ 
+      context.project.removeReflection(renaming, true);
     });
   }
 }
