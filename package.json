@@ -1,6 +1,6 @@
 {
   "name": "typedoc-plugin-external-module-map",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Specify the Typedoc Module of a file using a regular expression on the filename",
   "main": "index.js",
   "scripts": {
