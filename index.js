@@ -1,10 +1,7 @@
-var plugin = require("./plugin");
-module.exports = function(PluginHost) {
-  var app = PluginHost.owner;
-
-
+var plugin = require("./plugin").ExternalModuleMapPlugin;
+module.exports.load = function(app) {
   app.options.addDeclaration({ name: 'external-modulemap', short: 'em' });
 
-  app.converter.addComponent('external-module-map', plugin.ExternalModuleMapPlugin);
+  (new plugin).initialize(app);
 };
 
