@@ -1,11 +1,4 @@
-import { Reflection } from "typedoc/dist/lib/models/reflections/abstract";
-import { Component, ConverterComponent } from "typedoc/dist/lib/converter/components";
-import { Converter } from "typedoc/dist/lib/converter/converter";
-import { Context } from "typedoc/dist/lib/converter/context";
-import { CommentPlugin } from "typedoc/dist/lib/converter/plugins/CommentPlugin";
-import { ContainerReflection } from "typedoc/dist/lib/models/reflections/container";
-import { Options } from "typedoc/dist/lib/utils/options";
-
+import { Reflection, Converter, Context, ContainerReflection, Application } from "typedoc";
 
 /**
  * This plugin allows you to provide a mapping regexp between your source folder structure, and the module that should be
@@ -15,22 +8,17 @@ import { Options } from "typedoc/dist/lib/utils/options";
  *
  *
  */
-@Component({ name: 'external-module-map' })
-export class ExternalModuleMapPlugin extends ConverterComponent {
+export class ExternalModuleMapPlugin  {
   /** List of module reflections which are models to rename */
   private moduleRenames: ModuleRename[];
   private externalmap: string;
   private mapRegEx: RegExp ;
   private isMappingEnabled: boolean ;
-  private options: Options;
 
-  initialize() {
-    this.options = this.application.options;
-    this.listenTo(this.owner, {
-      [Converter.EVENT_BEGIN]: this.onBegin,
-      [Converter.EVENT_CREATE_DECLARATION]: this.onDeclarationBegin,
-      [Converter.EVENT_RESOLVE_BEGIN]: this.onBeginResolve,
-    });
+  initialize(app: Application) {
+    app.converter.on(Converter.EVENT_BEGIN, this.onBegin);
+    app.converter.on(Converter.EVENT_CREATE_DECLARATION, this.onDeclarationBegin);
+    app.converter.on(Converter.EVENT_RESOLVE_BEGIN, this.onBeginResolve);
   }
 
   /**
@@ -41,7 +29,7 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
   private onBegin(context: Context) {
     this.moduleRenames = [];
     //this.options.read();
-    this.externalmap = (this.options.getValue('external-modulemap') as string);
+    this.externalmap = context.converter.application.options.getValue("external-modulemap") as string;
     if (!!this.externalmap) {
       try {
         console.log("INFO: applying regexp ", this.externalmap, " to calculate module names");
@@ -112,8 +100,8 @@ export class ExternalModuleMapPlugin extends ConverterComponent {
       // Make sure the module being renamed doesn't have children, or they will be deleted
       if (renaming.children)
         renaming.children.length = 0;
- 
-      context.project.removeReflection(renaming, true);
+
+      context.project.removeReflection(renaming);
     });
   }
 }
