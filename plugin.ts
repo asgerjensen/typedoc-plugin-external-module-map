@@ -15,10 +15,10 @@ export class ExternalModuleMapPlugin  {
   private mapRegEx: RegExp ;
   private isMappingEnabled: boolean ;
 
-  public initialize(app: Application) {
+  initialize(app: Application) {
     app.converter.on(Converter.EVENT_BEGIN, this.onBegin);
-    app.converter.on(Converter.EVENT_RESOLVE_BEGIN, this.onBeginResolve);
     app.converter.on(Converter.EVENT_CREATE_DECLARATION, this.onDeclarationBegin);
+    app.converter.on(Converter.EVENT_RESOLVE_BEGIN, this.onBeginResolve);
   }
 
   /**

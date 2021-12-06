@@ -1,7 +1,7 @@
-var plugin = require("./plugin").ExternalModuleMapPlugin;
+var plugin = require("./plugin");
 module.exports.load = function(app) {
   app.options.addDeclaration({ name: 'external-modulemap', short: 'em' });
 
-  (new plugin).initialize(app);
+  (new plugin.ExternalModuleMapPlugin()).initialize(app);
 };
 

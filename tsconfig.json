@@ -5,8 +5,7 @@
     "module": "umd",
     "target": "es2015",
     "outDir": "./",
-    "experimentalDecorators": true,
-    "skipLibCheck": true
+    "experimentalDecorators": true
   },
   "files": [
     "plugin.ts"
