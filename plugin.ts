@@ -47,7 +47,7 @@ export class ExternalModuleMapPlugin  {
       return;
     var fileName = node.fileName;
     let match;
-    for (const reg in this.mapRegExs) {
+    for (const reg of this.mapRegExs) {
       match = reg.exec(fileName);
       if (null != match) {
         break;
