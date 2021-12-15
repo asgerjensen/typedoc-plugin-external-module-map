@@ -11,8 +11,8 @@ import { Reflection, Converter, Context, ContainerReflection, Application } from
 export class ExternalModuleMapPlugin  {
   /** List of module reflections which are models to rename */
   private moduleRenames: ModuleRename[];
-  private externalmap: string;
-  private mapRegEx: RegExp ;
+  private externalmap: string | string[];
+  private mapRegExs: RegExp[];
   private isMappingEnabled: boolean ;
 
   initialize(app: Application) {
@@ -29,11 +29,11 @@ export class ExternalModuleMapPlugin  {
   private onBegin(context: Context) {
     this.moduleRenames = [];
     //this.options.read();
-    this.externalmap = context.converter.application.options.getValue("external-modulemap") as string;
+    this.externalmap = context.converter.application.options.getValue("external-modulemap") as (string | string[]);
     if (!!this.externalmap) {
       try {
         console.log("INFO: applying regexp ", this.externalmap, " to calculate module names");
-        this.mapRegEx = new RegExp(this.externalmap);
+        this.mapRegExs = Array.isArray(this.externalmap) ? this.externalmap.map(reg => new RegExp(reg)) : [new RegExp(this.externalmap)];
         this.isMappingEnabled = true;
         console.log("INFO: Enabled", this.isMappingEnabled);
       } catch (e) {
@@ -46,7 +46,13 @@ export class ExternalModuleMapPlugin  {
     if (!node || !this.isMappingEnabled)
       return;
     var fileName = node.fileName;
-    let match = this.mapRegEx.exec(fileName);
+    let match;
+    for (const reg of this.mapRegExs) {
+      match = reg.exec(fileName);
+      if (null != match) {
+        break;
+      }
+    }
     /*
 
     */
