@@ -72,3 +72,23 @@ It is probably easier to create a typedoc options file (typedoc.json) and add it
 }
 ```
 
+If your pattern is not expressable in a single regexp, you can provide an array of regexps in the .json file. First to match will return the value.
+
+Example:
+```
+{
+  "name": "My Library",
+  "mode": "modules",
+  "out": "doc",
+  "theme": "default",
+  "ignoreCompilerErrors": "false",
+  "preserveConstEnums": "true",
+  "exclude": "*.spec.ts",
+  "external-modulemap": [
+	   ".*/(types/[\\w\\-_]+)/",
+	   ".*/(core/decorators/[\\w\\-_]+)/",
+	   ".*/subfolder/(core/[\\w\\-_]+)/",
+   ],
+  "stripInternal": "false"
+}
+```
