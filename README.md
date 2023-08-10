@@ -42,9 +42,11 @@ Instead of the four modules above, we could group them into two:
 Typedoc 0.4 has the ability to discover and load typedoc plugins found in node_modules.
 Simply install the plugin and run typedoc.
 
+However, Typedoc 0.24 did away with that, so now you have to specify it explicitly every time.
+
 ```
 npm install --save typedoc-plugin-external-module-map
-typedoc
+typedoc --plugin typedoc-plugin-external-module-map
 ```
 
 ### Using
