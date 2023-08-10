@@ -2,10 +2,11 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "allowJs": true,
-    "module": "umd",
+    "module": "commonjs",
     "target": "es2015",
     "outDir": "./",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   },
   "files": [
     "plugin.ts"
