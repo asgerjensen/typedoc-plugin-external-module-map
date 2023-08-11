@@ -49,7 +49,8 @@ npm install --save typedoc-plugin-external-module-map
 typedoc --plugin typedoc-plugin-external-module-map
 ```
 
-### Using
+
+### Usage
 
 This plugin adds a new input option
 ```
@@ -94,3 +95,12 @@ Example:
   "stripInternal": "false"
 }
 ```
+
+
+### Entrypoint Strategy "Packages"
+
+The new features in Typedoc of `"entryPointStrategy": "packages"`, or using `@group` or `@category`  with the appropriate base plugins have mostly superseeded this plugin, but there are still a few cases in which it makes sense. Ie if you have sub-packages, or multiple entry points.
+
+In these cases, you use the entrypoint strategy for the top level navigation, and then in the individual projects, place a typedoc.json with the external-modulemap configuration specific to the package. 
+
+The configuration will *not* be picked up from the top-level typedoc.json

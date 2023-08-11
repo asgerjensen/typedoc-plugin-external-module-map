@@ -1,4 +1,4 @@
-import { Reflection, Converter, Context, ContainerReflection, Application } from "typedoc";
+import { Application, ContainerReflection, Context, Converter, Reflection, ReflectionKind } from "typedoc";
 
 /**
  * This plugin allows you to provide a mapping regexp between your source folder structure, and the module that should be
@@ -8,7 +8,7 @@ import { Reflection, Converter, Context, ContainerReflection, Application } from
  *
  *
  */
-export class ExternalModuleMapPlugin  {
+export class ExternalModuleMapPlugin {
   /** List of module reflections which are models to rename */
   private moduleRenames: ModuleRename[];
   private externalmap: string | string[];
@@ -39,29 +39,39 @@ export class ExternalModuleMapPlugin  {
       } catch (e) {
         console.log("WARN: external map not recognized. Not processing.", e);
       }
-    }
+    } 
   }
 
   private onDeclarationBegin(context: Context, reflection: Reflection, node?) {
-    if (!node || !this.isMappingEnabled)
-      return;
-    var fileName = node.fileName;
-    let match;
-    for (const reg of this.mapRegExs) {
-      match = reg.exec(fileName);
-      if (null != match) {
-        break;
-      }
-    }
-    /*
 
-    */
-    if (null != match) {
-      console.log(' Mapping ', fileName, ' ==> ', match[1]);
-      this.moduleRenames.push({
-        renameTo: match[1],
-        reflection: <ContainerReflection>reflection
-      });
+    if (!this.isMappingEnabled) {
+      return;
+    }
+
+    if (!(reflection.kindOf(ReflectionKind.SomeModule))) {
+      return;
+    }
+
+    const symbol = reflection.project.getSymbolFromReflection(reflection);
+    
+    for (const node of symbol?.declarations || []) {
+      const sourceFile = node.getSourceFile();
+      const fileName = sourceFile.fileName;
+
+      let match;
+      for (const reg of this.mapRegExs) {
+        match = reg.exec(fileName);
+        if (null != match) {
+          break;
+        }
+      }
+      if (null != match) {
+        console.log(' Mapping ', fileName, ' ==> ', match[1]);
+        this.moduleRenames.push({
+          renameTo: match[1],
+          reflection: <ContainerReflection>reflection
+        });
+      }
     }
   }
 
@@ -72,7 +82,7 @@ export class ExternalModuleMapPlugin  {
    */
   private onBeginResolve(context: Context) {
     let projRefs = context.project.reflections;
-    let refsArray: Reflection[] = Object.keys(projRefs).reduce((m, k) => { m.push(projRefs[k]); return m; }, []);
+    let refsArray: Reflection[] = Object.keys(projRefs).reduce((m, k) => { m.push(projRefs[k]); return m.filter(y => y instanceof ContainerReflection); }, []);
 
     // Process each rename
     this.moduleRenames.forEach(item => {
