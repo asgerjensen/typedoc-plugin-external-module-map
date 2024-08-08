@@ -3,10 +3,11 @@
     "moduleResolution": "node",
     "allowJs": true,
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es2022",
     "outDir": "./",
     "experimentalDecorators": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
   },
   "files": [
     "plugin.ts"
