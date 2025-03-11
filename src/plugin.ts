@@ -10,15 +10,15 @@ import { Application, ContainerReflection, Context, Converter, Reflection, Refle
  */
 export class ExternalModuleMapPlugin {
   /** List of module reflections which are models to rename */
-  private moduleRenames: ModuleRename[];
-  private externalmap: string | string[];
-  private mapRegExs: RegExp[];
-  private isMappingEnabled: boolean ;
+  private moduleRenames = new Array<ModuleRename>();
+  private externalmap: string | string[] = '';
+  private mapRegExs = new Array<RegExp>();
+  private isMappingEnabled = false ;
 
   initialize(app: Application) {
-    app.converter.on(Converter.EVENT_BEGIN, this.onBegin);
-    app.converter.on(Converter.EVENT_CREATE_DECLARATION, this.onDeclarationBegin);
-    app.converter.on(Converter.EVENT_RESOLVE_BEGIN, this.onBeginResolve);
+    app.converter.on(Converter.EVENT_BEGIN, this.onBegin.bind(this));
+    app.converter.on(Converter.EVENT_CREATE_DECLARATION, this.onDeclarationBegin.bind(this));
+    app.converter.on(Converter.EVENT_RESOLVE_BEGIN, this.onBeginResolve.bind(this));
   }
 
   /**
@@ -26,7 +26,7 @@ export class ExternalModuleMapPlugin {
    *
    * @param context  The context object describing the current state the converter is in.
    */
-  private onBegin(context: Context) {
+  private onBegin(this: ExternalModuleMapPlugin, context: Context) {
     this.moduleRenames = [];
     //this.options.read();
     this.externalmap = context.converter.application.options.getValue("external-modulemap") as (string | string[]);
@@ -42,7 +42,7 @@ export class ExternalModuleMapPlugin {
     } 
   }
 
-  private onDeclarationBegin(context: Context, reflection: Reflection, node?) {
+  private onDeclarationBegin(this: ExternalModuleMapPlugin, context: Context, reflection: Reflection, node?: any) {
 
     if (!this.isMappingEnabled) {
       return;
@@ -80,9 +80,9 @@ export class ExternalModuleMapPlugin {
    *
    * @param context  The context object describing the current state the converter is in.
    */
-  private onBeginResolve(context: Context) {
-    let projRefs = context.project.reflections;
-    let refsArray: Reflection[] = Object.keys(projRefs).reduce((m, k) => { m.push(projRefs[k]); return m.filter(y => y instanceof ContainerReflection); }, []);
+  private onBeginResolve(this: ExternalModuleMapPlugin, context: Context) {
+    let projRefs: any = context.project.reflections;
+    let refsArray: Reflection[] = Object.keys(projRefs).reduce((m:any, k:any) => { m.push(projRefs[k]); return m.filter( (y:any) => y instanceof ContainerReflection); }, []);
 
     // Process each rename
     this.moduleRenames.forEach(item => {
@@ -108,7 +108,9 @@ export class ExternalModuleMapPlugin {
 
         //console.log(' merging ', mergeTarget, ref);
         ref.parent = mergeTarget;
-        mergeTarget.children.push(<any>ref)
+        if (mergeTarget && mergeTarget.children) {
+          mergeTarget.children.push(<any>ref)
+        }
       });
 
 

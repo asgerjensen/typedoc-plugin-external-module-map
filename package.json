@@ -1,8 +1,15 @@
 {
   "name": "typedoc-plugin-external-module-map",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Specify the Typedoc Module of a file using a regular expression on the filename",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build"
@@ -18,11 +25,11 @@
   "author": "Asger Jensen <asger.jensen@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "typedoc": ">=0.26 <2.0"
+    "typedoc": ">=0.27 <2.0"
   },
   "devDependencies": {
-    "typedoc": "^0.26.5",
-    "typescript": "^5.5.4"
+    "typedoc": "^0.27.0",
+    "typescript": "^5.6.0"
   },
   "dependencies": {
     "@types/node": "^20.14.14"

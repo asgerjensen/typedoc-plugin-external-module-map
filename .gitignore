@@ -1,7 +1,7 @@
 *.ipr
 *.iws
 *.iml
-
+dist/*
 # Built using tsc
 plugin.js 
 
