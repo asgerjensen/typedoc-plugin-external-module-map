@@ -12,7 +12,8 @@
 
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test:package": "node scripts/verify-package-entrypoints.mjs"
   },
   "keywords": [
     "typedocplugin",
